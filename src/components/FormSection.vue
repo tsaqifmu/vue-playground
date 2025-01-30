@@ -141,7 +141,6 @@ export default {
         this.formValue.message = this.defaultOutgoingMessage;
         this.formValue.buttonText = "Customer response Yes or No";
       }
-      console.log("value input radio", newVal);
     },
   },
 };
