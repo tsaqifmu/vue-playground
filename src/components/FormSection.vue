@@ -1,5 +1,5 @@
 <template>
-  <div class="relative w-[440px] flex-none px-6 pt-6 pb-24">
+  <div>
     <h3 class="text-xl font-semibold text-[#0A0A0A]">Send Interactive Call</h3>
 
     <!-- Call Type Input Radio -->
@@ -9,11 +9,10 @@
         <div
           v-for="(item, index) in callType"
           :key="index"
-          class="relative flex items-center gap-x-3"
+          class="flex items-center gap-x-3"
         >
           <input
             type="radio"
-            name="callType"
             v-model="formValue.callType"
             :value="item.value"
             :id="`callType` + item.value"
@@ -23,7 +22,11 @@
           <label
             v-text="item.label"
             :for="`callType` + item.value"
-            :class="{ 'font-medium': formValue.callType === item.value }"
+            :class="
+              formValue.callType === item.value
+                ? 'font-medium text-[#0A0A0A]'
+                : 'text-[#565656]'
+            "
             class="text-sm"
           ></label>
         </div>
@@ -31,7 +34,7 @@
     </div>
 
     <!-- Message Text Input Text -->
-    <div class="relative">
+    <div class="">
       <p class="mt-6 text-sm text-[#565656]">Message</p>
       <textarea
         type="text"
@@ -50,7 +53,7 @@
     </div>
 
     <!-- Button Call Input Text  -->
-    <div v-if="formValue.callType === 'incoming_call'" class="relative">
+    <div v-if="formValue.callType === 'incoming_call'" class="">
       <p class="mt-6 text-sm text-[#565656]">Button Call</p>
       <textarea
         placeholder="Type your button Call "
@@ -62,24 +65,6 @@
       <p class="absolute right-5 bottom-3 text-xs font-semibold">
         {{ formValue.buttonText.length }}/{{ BUTTON_MAX_LENGTH }}
       </p>
-    </div>
-
-    <!-- Button Close & Send -->
-    <div
-      class="absolute bottom-0 left-0 flex h-[68px] w-full items-center justify-center gap-x-4 bg-white shadow-[0px_-8px_12px_0px_#0A0A0A0A]"
-    >
-      <button
-        @click="handleBack"
-        class="rounded-full px-6 py-2 text-[#27B199] ring ring-[#27B199]"
-      >
-        Back
-      </button>
-      <button
-        :disabled="isFormEmpty"
-        class="rounded-full bg-[#27B199] px-6 py-2 text-white disabled:cursor-not-allowed disabled:bg-[#ECECEC] disabled:text-[#A0A0A0]"
-      >
-        Send
-      </button>
     </div>
   </div>
 </template>
@@ -114,6 +99,7 @@ export default {
         return this.value;
       },
       set(value) {
+        console.log("dari set", value);
         this.$emit("input", value);
       },
     },

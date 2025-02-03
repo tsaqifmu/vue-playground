@@ -14,7 +14,11 @@
     "vue": "^2.7.16"
   },
   "devDependencies": {
+    "@eslint/js": "^9.19.0",
     "@vitejs/plugin-vue2": "^2.3.1",
+    "eslint": "^9.19.0",
+    "eslint-plugin-vue": "^9.32.0",
+    "globals": "^15.14.0",
     "prettier": "^3.4.2",
     "prettier-plugin-tailwindcss": "^0.6.10",
     "vite": "^6.0.5"
