@@ -45,6 +45,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import FormSection from "./components/FormSection.vue";
 import PreviewMessageSection from "./components/PreviewSection.vue";
 
@@ -79,9 +80,97 @@ export default {
 
       console.log("Form Data:", this.formData);
 
-      // Optional: Reset form dan tutup modal setelah mengirim
-      this.resetForm();
+      const baseUrlV3 = "https://qismo-stag.qiscus.io/api/v3";
+      const appId = "kovof-naquwyqeens0t0a";
+      const channelId = 960;
+
+      const headers = {
+        Authorization: "Wb298q4uJvsWpd23cu0h",
+        APP_ID: "kovof-naquwyqeens0t0a",
+        "Qiscus-App-Id": "kovof-naquwyqeens0t0a",
+        "App-Version": "default",
+      };
+
+      const url = `${baseUrlV3}/${appId}/${channelId}/messages`;
+      const params = {
+        recipient_type: "individual",
+        to: "6287777060010",
+        type: "interactive",
+        interactive: {
+          type: "list",
+          header: {
+            type: "text",
+            text: "your-header-content",
+          },
+          body: {
+            text: "your-text-message-content",
+          },
+          footer: {
+            text: "your-footer-content",
+          },
+          action: {
+            button: "cta-button-content",
+            sections: [
+              {
+                title: "section-title1",
+                rows: [
+                  {
+                    id: "unique-row-identifier1",
+                    title: "row-title-content1",
+                    description: "row-description-content1",
+                  },
+                ],
+              },
+              {
+                title: "section-title2",
+                rows: [
+                  {
+                    id: "unique-row-identifier2",
+                    title: "row-title-content2",
+                    description: "row-description-content2",
+                  },
+                ],
+              },
+              {
+                title: "section-title3",
+                rows: [
+                  {
+                    id: "unique-row-identifier3",
+                    title: "row-title-content3",
+                    description: "row-description-content3",
+                  },
+                ],
+              },
+              {
+                title: "section-title4",
+                rows: [
+                  {
+                    id: "unique-row-identifier4",
+                    title: "row-title-content4",
+                    description: "row-description-content4",
+                  },
+                ],
+              },
+            ],
+          },
+        },
+      };
+
+      axios
+        .post(url, params, {
+          headers: headers,
+        })
+        .then((response) => {
+          console.log("Response dari server:", response.data);
+          // this.resetInteractiveCallForm();
+          this.resetForm();
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+          this.error = "Terjadi kesalahan saat mengirim data";
+        });
     },
+
     resetForm() {
       this.formData = {
         callType: "incoming_call",
@@ -91,11 +180,5 @@ export default {
       this.isShowModal = false;
     },
   },
-
-  // watch: {
-  //   "formData.message"(val) {
-  //     console.log("message", val);
-  //   },
-  // },
 };
 </script>
