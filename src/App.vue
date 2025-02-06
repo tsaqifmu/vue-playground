@@ -78,11 +78,10 @@ export default {
       // Mencegah form kosong terkirim
       if (this.isFormEmpty) return;
 
-      console.log("Form Data:", this.formData);
-
-      const baseUrlV3 = "https://qismo-stag.qiscus.io/api/v3";
+      const baseUrlV3 = "https://qismo-stag.qiscus.io/whatsapp/v1";
       const appId = "kovof-naquwyqeens0t0a";
       const channelId = 960;
+      const userEmail = 6287777060010;
 
       const headers = {
         Authorization: "Wb298q4uJvsWpd23cu0h",
@@ -94,22 +93,22 @@ export default {
       const url = `${baseUrlV3}/${appId}/${channelId}/messages`;
       const params = {
         recipient_type: "individual",
-        to: "6287777060010",
+        to: userEmail,
         type: "interactive",
         interactive: {
           type: "list",
-          header: {
-            type: "text",
-            text: "your-header-content",
-          },
+          // header: {
+          //   type: "text",
+          //   text: "header, keknya ngga kepake",
+          // },
           body: {
-            text: "your-text-message-content",
+            text: this.formData.message,
           },
-          footer: {
-            text: "your-footer-content",
-          },
+          // footer: {
+          //   text: "footer, keknya ngga kepake",
+          // },
           action: {
-            button: "cta-button-content",
+            button: this.formData.buttonText,
             sections: [
               {
                 title: "section-title1",
@@ -121,40 +120,22 @@ export default {
                   },
                 ],
               },
-              {
-                title: "section-title2",
-                rows: [
-                  {
-                    id: "unique-row-identifier2",
-                    title: "row-title-content2",
-                    description: "row-description-content2",
-                  },
-                ],
-              },
-              {
-                title: "section-title3",
-                rows: [
-                  {
-                    id: "unique-row-identifier3",
-                    title: "row-title-content3",
-                    description: "row-description-content3",
-                  },
-                ],
-              },
-              {
-                title: "section-title4",
-                rows: [
-                  {
-                    id: "unique-row-identifier4",
-                    title: "row-title-content4",
-                    description: "row-description-content4",
-                  },
-                ],
-              },
+              // {
+              //   title: "section-title2",
+              //   rows: [
+              //     {
+              //       id: "unique-row-identifier2",
+              //       title: "row-title-content2",
+              //       description: "row-description-content2",
+              //     },
+              //   ],
+              // },
             ],
           },
         },
       };
+
+      console.log(headers);
 
       axios
         .post(url, params, {
@@ -162,8 +143,7 @@ export default {
         })
         .then((response) => {
           console.log("Response dari server:", response.data);
-          // this.resetInteractiveCallForm();
-          this.resetForm();
+          this.resetInteractiveCallForm();
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -171,7 +151,7 @@ export default {
         });
     },
 
-    resetForm() {
+    resetInteractiveCallForm() {
       this.formData = {
         callType: "incoming_call",
         message: "",

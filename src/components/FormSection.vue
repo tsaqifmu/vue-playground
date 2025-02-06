@@ -34,7 +34,7 @@
     </div>
 
     <!-- Message Text Input Text -->
-    <div class="">
+    <div class="relative">
       <p class="mt-6 text-sm text-[#565656]">Message</p>
       <textarea
         type="text"
@@ -53,7 +53,7 @@
     </div>
 
     <!-- Button Call Input Text  -->
-    <div v-if="formValue.callType === 'incoming_call'" class="">
+    <div v-if="formValue.callType === 'incoming_call'" class="relative">
       <p class="mt-6 text-sm text-[#565656]">Button Call</p>
       <textarea
         placeholder="Type your button Call "
@@ -90,6 +90,7 @@ export default {
       ],
       defaultOutgoingMessage:
         "Can {{Company name}} call you? Choosing Yes allows a call in the next 3 days",
+      defaultOutgoingButtonText: "Customer response",
     };
   },
 
@@ -125,7 +126,7 @@ export default {
       // Then set new values based on condition
       if (newVal === "outgoing_call") {
         this.formValue.message = this.defaultOutgoingMessage;
-        this.formValue.buttonText = "Customer response Yes or No";
+        this.formValue.buttonText = this.defaultOutgoingButtonText;
       }
     },
   },
